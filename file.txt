@@ -1,0 +1,242 @@
+/*
+
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+template <typename T>
+class rect
+{
+private :
+	T col;
+	T row;
+	T area;
+
+public:
+	float colss=0;
+	float rowss=0;
+	float areas = 0;
+
+	rect(float colss, float rowss, float areas) : col(colss), row(rowss), area(areas)
+	{
+	}
+	~rect(){}
+
+	void set(float colss, float rowss)
+	{
+		string filename("result.txt");
+		ifstream filer("result.txt");
+		fstream file;
+		string line;
+		int count = 0;
+
+		if (filer.is_open())
+		{
+			while (getline(filer, line))
+			{
+				count++;
+			}
+			filer.close();
+		}
+
+		col = colss;
+		row = rowss;
+
+		file.open(filename, std::ios_base::app | std::ios_base::in);
+		if (file.is_open())
+		{
+			file << (count + 1)  << ") 가로 : " << col << " 세로 : " << row << " ";
+			file.close();
+		}
+	}
+
+	void calc()
+	{
+		areas = col * row;
+		area = areas;
+		cout << "사각형 넓이 :";
+		cout << area << endl;
+		cout << endl;
+
+		string filename("result.txt");
+		fstream file;
+
+		file.open(filename, std::ios_base::app | std::ios_base::in);
+		if (file.is_open())
+		{
+			file << "/ 사각형 넓이 : " << area << "\n";
+			file.close();
+		}
+	}
+};
+
+
+int main(void)
+{
+	rect<float> r(0,0,0);
+	string cols = "";
+	string rows = "";
+	float f_cols = 0.0;
+	float f_rows = 0.0;
+	int step = 0;
+
+	//file
+	string line;
+
+
+	while (1)
+	{
+		if (step == 0)
+		{
+			cout << "가로 입력 : ";
+			cin >> cols;
+
+			if (atoi(cols.c_str()) == 0)
+				cout << "에러 : 문자열 입력" << endl;
+			else
+				step = 1;
+
+			if (step == 1)
+			{
+				f_cols = stof(cols);
+
+				if (f_cols < 0)
+				{
+					cout << "에러 : 음수 입력 : ";
+				}
+				else
+					step = 2;
+			}
+		}
+
+		else if (step == 2)
+		{
+			cout << "세로 입력 : ";
+			cin >> rows;
+
+			if (atoi(rows.c_str()) == 0)
+				cout << "에러 : 문자열 입력" << endl;
+			else
+				step = 3;
+
+			if (step == 3)
+			{
+				f_rows = stof(rows);
+
+				if (f_rows < 0)
+				{
+					cout << "에러 : 음수 입력 : " << endl;
+				}
+				else
+				{
+					r.set(f_cols, f_rows);
+					r.calc();
+					step = 0;
+				}
+			}
+		}
+	}
+	return 0;
+}
+*/
+
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+
+
+int main(void)
+{
+
+	int step = 0;
+
+	//file
+	string line;
+
+
+	while (1)
+	{
+		if (step == 0)
+		{
+			string filename("B.txt");
+			ifstream filer("B.txt");
+			ifstream filers("B.txt");
+			fstream file;
+			string line;
+			string line_c;
+			char lines[50] = { ' ' };
+			int flag1 = 0;
+			int count_b = 0;
+			int count_b_check = 0;
+
+	
+
+			//
+			if (filer.is_open())
+			{
+				while (getline(filer, line))
+				{
+					count_b++;
+				}
+				filer.close();
+				cout << count_b << endl;
+				step = 1;
+			}
+
+			if (step == 1)
+			{
+				if (filers.is_open())
+				{
+					while (getline(filers, line))
+					{
+						count_b_check++;
+
+						if (count_b == count_b_check)
+						{
+							filers.close();
+							step = 2;
+						}
+					}
+				}
+			}
+
+			int col_len = 0;
+			int col_loc = 0;
+
+			int size = 0;
+			int j = 0;
+			float sum = 0;
+
+			if (step == 2)
+			{
+				for (int i = 0; i < line.length(); i++) //strlen 사용 시, 에러
+				{
+					if (line[i] == ')')
+					{
+						col_len = line.length() - (i +2); //5-1-1
+						size = line.length() - col_len;
+					}
+				}
+				cout << line.length() << endl;
+				cout << col_len << endl;
+				cout << size << endl;
+			}
+			
+			for (int i = line.length()-1  ; i >= size; i--) //strlen 사용 시, 에
+			{
+				cout << (line[i]-'0') * pow(10, j)  << endl;
+				sum = sum + (line[i] - '0') * pow(10, j);
+				j++;
+			}
+			cout << sum << endl;
+		}
+	}
+	return 0;
+}
